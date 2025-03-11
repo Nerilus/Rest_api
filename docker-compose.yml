@@ -1,0 +1,48 @@
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=mariadb
+      - DB_USER=movieapp
+      - DB_PASSWORD=movieapp_password
+      - DB_NAME=movieapp_db
+      - JWT_SECRET=votre_secret_jwt_super_securise
+      - JWT_REFRESH_SECRET=votre_secret_refresh_jwt_super_securise
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    volumes:
+      - ./uploads:/app/uploads
+    command: sh -c "npm install wait-on && npx wait-on tcp:mariadb:3306 && npm start"
+
+  mariadb:
+    image: mariadb:10.6
+    environment:
+      - MYSQL_ROOT_PASSWORD=root_password
+      - MYSQL_DATABASE=movieapp_db
+      - MYSQL_USER=movieapp
+      - MYSQL_PASSWORD=movieapp_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "movieapp", "-pmovieapp_password"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+  adminer:
+    image: adminer:latest
+    restart: always
+    ports:
+      - "8282:8080"
+    depends_on:
+      mariadb:
+        condition: service_healthy
+
+volumes:
+  mariadb_data: 
