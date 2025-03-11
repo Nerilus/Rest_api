@@ -313,3 +313,153 @@ npm run dev
 3. Commit les changements (`git commit -am 'Ajout d'une nouvelle fonctionnalité'`)
 4. Push la branche (`git push origin feature/nouvelle-fonctionnalite`)
 5. Créer une Pull Request 
+
+
+
+1. Register (Inscription)
+POST http://localhost:3000/auth/register
+Headers: 
+- Content-Type: application/json
+Body:
+{
+    "email": "test@example.com",
+    "password": "password123",
+    "firstName": "John",
+    "lastName": "Doe"
+}
+
+2. Login (Connexion)
+POST http://localhost:3000/auth/login
+Headers:
+- Content-Type: application/json
+Body:
+{
+    "email": "test@example.com",
+    "password": "password123"
+}
+
+3. Refresh Token
+POST http://localhost:3000/auth/refresh-token
+Headers:
+- Authorization: Bearer {{REFRESH_TOKEN}}
+- Content-Type: application/json
+
+4. Logout (Déconnexion)
+POST http://localhost:3000/auth/logout
+Headers:
+- Authorization: Bearer {{ACCESS_TOKEN}}
+- Content-Type: application/json
+
+5. Get Profile (Obtenir le profil)
+GET http://localhost:3000/auth/profile
+Headers:
+- Authorization: Bearer {{ACCESS_TOKEN}}
+
+6. Update Profile (Mettre à jour le profil)
+PUT http://localhost:3000/auth/profile
+Headers:
+- Authorization: Bearer {{ACCESS_TOKEN}}
+- Content-Type: application/json
+Body:
+{
+    "firstName": "John Updated",
+    "lastName": "Doe Updated",
+    "password": "newpassword123"
+}
+
+
+
+
+1. Get All Movies
+GET http://localhost:3000/api/movies
+Headers:
+- Authorization: Bearer {{ACCESS_TOKEN}}
+
+2. Get Single Movie
+GET http://localhost:3000/api/movies/:id
+Headers:
+- Authorization: Bearer {{ACCESS_TOKEN}}
+
+3. Create Movie
+POST http://localhost:3000/api/movies
+Headers:
+- Authorization: Bearer {{ACCESS_TOKEN}}
+- Content-Type: application/json
+Body:
+{
+    "title": "Inception",
+    "director": "Christopher Nolan",
+    "releaseYear": 2010,
+    "genre": "Sci-Fi",
+    "rating": 8.8,
+    "rentalPrice": 4.99
+}
+
+4. Update Movie
+PUT http://localhost:3000/api/movies/:id
+Headers:
+- Authorization: Bearer {{ACCESS_TOKEN}}
+- Content-Type: application/json
+Body:
+{
+    "rating": 9.0,
+    "rentalPrice": 5.99
+}
+
+5. Delete Movie
+DELETE http://localhost:3000/api/movies/:id
+Headers:
+- Authorization: Bearer {{ACCESS_TOKEN}}
+
+
+
+
+1. Get All Actors
+GET http://localhost:3000/api/actors
+Headers:
+- Authorization: Bearer {{ACCESS_TOKEN}}
+
+2. Get Single Actor
+GET http://localhost:3000/api/actors/:id
+Headers:
+- Authorization: Bearer {{ACCESS_TOKEN}}
+
+3. Create Actor
+POST http://localhost:3000/api/actors
+Headers:
+- Authorization: Bearer {{ACCESS_TOKEN}}
+- Content-Type: application/json
+Body:
+{
+    "name": "Leonardo DiCaprio",
+    "birthDate": "1974-11-11",
+    "nationality": "American",
+    "biography": "Academy Award-winning actor..."
+}
+
+4. Update Actor
+PUT http://localhost:3000/api/actors/:id
+Headers:
+- Authorization: Bearer {{ACCESS_TOKEN}}
+- Content-Type: application/json
+Body:
+{
+    "biography": "Updated biography..."
+}
+
+5. Delete Actor
+DELETE http://localhost:3000/api/actors/:id
+Headers:
+- Authorization: Bearer {{ACCESS_TOKEN}}
+
+
+
+1. Add Actor to Movie
+POST http://localhost:3000/api/movies/:movieId/actors/:actorId
+Headers:
+- Authorization: Bearer {{ACCESS_TOKEN}}
+
+2. Remove Actor from Movie
+DELETE http://localhost:3000/api/movies/:movieId/actors/:actorId
+Headers:
+- Authorization: Bearer {{ACCESS_TOKEN}}
